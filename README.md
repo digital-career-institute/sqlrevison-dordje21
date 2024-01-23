@@ -1,3 +1,116 @@
+```
+
+CREATE DATABASE SchoolDB CHARACTER SET utf8mb4;
+USE SchoolDB;
+```
+
+```
+CREATE TABLE Classrooms (
+    classroom_id INT PRIMARY KEY,
+    classroom_name VARCHAR(50),
+    teacher_id INT
+);
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50),
+    classroom_id INT,
+    grade INT,
+    gender VARCHAR(10),
+    FOREIGN KEY (classroom_id) REFERENCES Classrooms(classroom_id)
+);
+```
+```
+ALTER TABLE Students
+ADD COLUMN Gender VARCHAR(10);
+```
+```
+
+INSERT INTO Students VALUES (1, 'Student1', 1, 90, 'Male');
+```
+
+```
+
+UPDATE Students SET Age = Age + 1 WHERE Classroom_id = 10 AND Age BETWEEN 10 AND 16;
+
+```
+
+```
+
+DELETE FROM Students WHERE Age < 10;
+
+```
+
+```
+
+SELECT FirstName, LastName, Age FROM Students;
+
+```
+
+```
+
+SELECT AVG(Age) AS AverageAge FROM Students;
+```
+ 
+```
+
+ALTER TABLE Students
+ADD PRIMARY KEY (StudentID);
+```
+Create Foreign Key:
+A foreign key establishes a link between two tables, enforcing referential integrity.
+
+```
+
+        CREATE TABLE Courses (
+            CourseID INT PRIMARY KEY,
+            CourseName VARCHAR(50)
+        );
+
+        ALTER TABLE Students
+        ADD FOREIGN KEY (CourseID) REFERENCES Courses(CourseID);
+```
+    SQL Queries:
+
+    List all students with their respective classrooms and teacher names:
+
+```
+
+SELECT Students.student_name, Classrooms.classroom_name, Classrooms.teacher_name
+FROM Students
+JOIN Classrooms ON Students.classroom_id = Classrooms.classroom_id;
+```
+ 
+```
+SELECT Classrooms.classroom_name, AVG(Students.grade) AS AverageGrade
+FROM Students
+JOIN Classrooms ON Students.classroom_id = Classrooms.classroom_id
+GROUP BY Classrooms.classroom_name;
+```
+ 
+```
+SELECT Students.student_name
+FROM Students
+JOIN Classrooms ON Students.classroom_id = Classrooms.classroom_id
+WHERE Classrooms.teacher_id = 123;
+```
+ 
+```
+
+SELECT Classrooms.classroom_name, COUNT(Students.student_id) AS NumberOfStudents
+FROM Classrooms
+LEFT JOIN Students ON Classrooms.classroom_id = Students.classroom_id
+GROUP BY Classrooms.classroom_name;
+```
+ 
+```
+    SELECT Classrooms.classroom_name, AVG(Students.grade) AS AverageGrade
+    FROM Students
+    JOIN Classrooms ON Students.classroom_id = Classrooms.classroom_id
+    GROUP BY Classrooms.classroom_name
+    HAVING AVG(Students.grade) > 80;
+```
+
 # DDL Commands:
 # Create a Database:
 Task: Create a new database named "SchoolDB" with an appropriate character set.
